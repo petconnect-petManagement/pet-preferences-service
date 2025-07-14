@@ -1,6 +1,9 @@
-from typing import Optional, Dict
-from pydantic import BaseModel
+from typing import Dict
+from pydantic import BaseModel, Field
 
 class PetPreference(BaseModel):
-    _id: str
-    preferences: Dict[str, str]  
+    id: str = Field(..., alias="_id")
+    preferences: Dict[str, str]
+
+    class Config:
+        allow_population_by_field_name = True
