@@ -8,8 +8,9 @@ router = APIRouter(prefix="/api/v1/pet-preferences", tags=["pet-preferences"])
 def create_preferences(pref: PetPreference):
     if preferences_collection.find_one({"pet_id": pref.pet_id}):
         raise HTTPException(status_code=400, detail="Preferences already exist.")
+    
     preferences_collection.insert_one(pref.dict())
-    return {"message": "Preferences created"}
+    return {"message": "Preferences created", "data": pref.dict()}
 
 @router.get("/{pet_id}")
 def get_preferences(pet_id: str):
